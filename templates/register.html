@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        /* Basic styles here */
+        body { font-family: Arial, sans-serif; }
+        .form-group { margin-bottom: 1em; }
+        .form-control { padding: 0.5em; width: 100%; }
+        .btn-primary { padding: 0.5em 1em; background-color: blue; color: white; border: none; }
+        .alert { padding: 1em; margin-top: 1em; }
+        .alert-danger { background-color: red; color: white; }
+        .alert-success { background-color: green; color: white; }
+    </style>
+</head>
+<body>
+    <form method="POST" action="{{ url_for('register') }}">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            <label for="username">Username</label>
+            {{ form.username(class_='form-control') }}
+            {% for error in form.username.errors %}
+                <span class="alert alert-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            {{ form.email(class_='form-control') }}
+            {% for error in form.email.errors %}
+                <span class="alert alert-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div class="form-group">
+            {{ form.submit(class_='btn-primary') }}
+        </div>
+        {% if form.errors %}
+            <div class="alert alert-danger">
+                <ul>
+                    {% for field, errors in form.errors.items() %}
+                        {% for error in errors %}
+                            <li>{{ field }}: {{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        {% if success_msg %}
+            <div class="alert alert-success">
+                {{ success_msg }}
+            </div>
+        {% endif %}
+    </form>
+</body>
+</html>
